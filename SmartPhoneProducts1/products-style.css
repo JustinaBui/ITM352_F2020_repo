@@ -1,4 +1,22 @@
 body {
-    width: ;
+    width: 800px; 
+    margin: 0 auto;
 }
+
+img {
+    width: 200px; 
+    height: 200px;
+}
+
+h1,h2 {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+<style>
+div {
+  background-image: url('images/phone_globe.jpeg');
+}
+</style>
 
