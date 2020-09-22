@@ -7,8 +7,9 @@ body {
     color: yellow;
     margin: 10px, 50px, 10px, 50px;
     width: 950px;
-    background-color: black;
+    background-color:black;
 }
+
 ul {
     list-style-type: none;
     margin: 0;
