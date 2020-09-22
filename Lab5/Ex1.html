@@ -6,27 +6,39 @@
     <title>Document</title>
 </head>
 <body>
-   hello
+   Hello
    <script>
        var first_name = "Justina";
        var middle_name = "Nguyen";
        var last_name = "Bui";
        var full_name = first_name + " " + middle_name + " " + last_name;
-        var formatted_name = full_name + '<br>' + first_name[0] + '.' + last_name[0] + '.' + '<br>';
+       var formatted_name = full_name + '<br>' + first_name[0] + '.' + last_name[0] + '.' + '<br>';
+       
+       document.write(formatted_name);
 
-        document.write(formatted_name);
-       document.write(full_name);
+       var str = new String ("Justina" + " ")
+       document.write(str.bold());
+
+       var str = new String ("Nguyen" + " ");
+       document.write(str.italics());
+
+       var str = new String ("Bui" + " ")
+       document.write(str.fontsize(10));
+        
+       var bill = 100.00;
+       var tax = bill * 0.0413;
+       var taxDecimal = tax.toFixed(2);
+       document.write('<br>' + "The tax on" + " " + first_name+ "'s bill is" + " " + taxDecimal);
+
     </script>
     <div id="ageDiv"></div>
 </body>
 </html>
 <script>
     var stupid;
-    age = 52;
+    var numberOfKids = "2";
+    age = 20.16;
     numberOfKids = 100000;
-    var numberOfKids;
-    document.getElementById('ageDiv').innerHTML = "I want " + 
-    numberOfKids*age*stupid + " kids!";  
-    
+    document.getElementById('ageDiv').innerHTML = "I want " + numberOfKids * age * stupid + " kids!";  
 
 </script>
