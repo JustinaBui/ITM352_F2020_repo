@@ -1,0 +1,37 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+PS C:\Users\buiju\OneDrive\Documents\GitHub\ITM352_F2020_repo> node -i
+Welcome to Node.js v14.8.0.       
+Type ".help" for more information.
+> month = 8
+8
+> day = 1
+1
+> year = 2000
+2000
+> step1 =  00
+0
+> year - 2000
+0
+> step2 = step1/4
+0
+> step2 = Math.floor(step1/4)
+0
+> step2 = parseInt(step1/4)
+0
+> step3 = step2 + step1
+0
+> step4 = 2
+2
+> step6 = step4 + step3
+2
+> step7 = step6 + day
+3
+> step8 = step7
+3
+> step8 = step8 - 1
+2
+>
