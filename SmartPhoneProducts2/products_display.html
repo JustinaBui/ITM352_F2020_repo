@@ -45,13 +45,13 @@
     <div><main>
             <script>
                 for (i = 1; i <= num_items; i++) {
-                    document.write(
-        `<section class="item">
+                    document.write(`
+        <section class="item">
         <h2>${eval('brand'+ i)}</h2>
         <p>$${eval('price'+ i)}</p>
         <img src="${eval('image' + i)}">
-        </section>`
-        );
+        </section>
+        `);
                 }
             </script>
         </main></div>
