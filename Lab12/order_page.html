@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    function checkQuantityTextbook() {
+        quantity_textbook_message.innerHTML = quantity_textbox.value;
+    }
+</script>
+
+<body>
+    <label for="frname">Box</label><br>
+    <input type="text" id="qty_textbook_message" 
+    onkeyup="qty_textbook_message.innerHTML = quantity_textbox.value">
+    <span id='qty_textbook_message'>Enter a quantity</span>
+
+</body>
+
+</html>
