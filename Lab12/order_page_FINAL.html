@@ -4,18 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lab12</title>
 
     <script>
         let params = (new URL(document.location)).searchParams;
 
         function isNonNegInt(val, returnErrors = false) {
-            errors = []; // assume no errors at first
+            errors = []; 
+            // assume no errors at first
             if (Number(val) != val) {
-                errors.push('Not a number!');// Check if string is a number value
+                errors.push('Not a number!');
+            // Check if string is a number value
             } else {
-                if (val < 0) errors.push('Negative value!'); // Check if it is non-negative
-                if (parseInt(val) != val) errors.push('Not an integer!'); // Check that it is an integer
+                if (val < 0) errors.push('Negative value!');
+            // Check if it is non-negative
+                if (parseInt(val) != val) errors.push('Not an integer!'); 
+            // Check that it is an integer
             }
             return returnErrors ? errors : ((errors.length > 0) ? false : true);
         }
@@ -42,8 +46,7 @@
                 quantity_form["quantity_textbox"].value = params.get('quantity_textbox');
             }
         }
-
-
+        
     </script>
 </head>
 
