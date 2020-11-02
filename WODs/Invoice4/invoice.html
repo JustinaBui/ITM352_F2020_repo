@@ -1,31 +1,35 @@
 <script>
   /*
-  This is a sales invoice from SmartPhone Products 3!
+  This showcases a sales invoice from the product sales data at the SmartPhone Products 3.
   */
 
   // Product Data
-
-  var products = [
-    {
+  var products = 
+[
+{
       "brand": "HTC",
       "price": 40.00,
       "image": "http://dport96.github.io/ITM352/morea/080.flow-control-II/HTC.jpg"
     },
+
     {
       "brand": "Apple",
       "price": 75.00,
       "image": "http://dport96.github.io/ITM352/morea/080.flow-control-II/iphone-3gs.jpg"
     },
+
     {
       "brand": "Nokia",
       "price": 35.00,
       "image": "http://dport96.github.io/ITM352/morea/080.flow-control-II/Nokia.jpg"
     },
+
     {
       "brand": "Samsung",
       "price": 45.00,
       "image": "http://dport96.github.io/ITM352/morea/080.flow-control-II/Samsung.jpg"
     },
+
     {
       "brand": "Blackberry",
       "price": 10.00,
@@ -33,42 +37,49 @@
     }
   ];
 
-  var quantities = [1, -2, 2.345, -2.345, 'ITM'];
-
-  function generate_item_rows(product_quantities_array) {
-    for (i = 0; i < product_quantities_array.length; i++) {
-      quantity = product_quantities_array[i];
-      errs = isNonNegInt(quantity, true);
-      if (quantity == 0) {
-        continue;
-      }
-      if (errs.length == 0) {
-        extended_price = quantity * products[i].price;
-        subtotal = extended_price + subtotal;
-      } else {
-        qty = `<span style="color:red;">${quantity}<br>${errs.join("<br>")}</span>`
-      }
-      document.write(`
-    <tr>
-      <td width="43%">${products[i].brand}</td>
-      <td align="center" width="11%">${quantity}</td>
-      <td width="13%">\$${products[i].price}</td>
-      <td width="54%">\$${extended_price.toFixed(2)}</td>
-    </tr>
-     `);
-    }
-  }
-
-  function isNonNegInt(q, returnErrors = false) {
-    errors = []; // assume no errors at first
-    if (Number(q) != q) errors.push('Not a number!');
-    if (q < 0) errors.push('Negative value!');
-    if (parseInt(q) != q) errors.push('Not an integer!');
-    return returnErrors ? errors : ((errors.length > 0) ? false : true);
-  }
+  // Product quantities
+  var quantities = [1,-1,1.2,-1.2,"ITM"];
 
   // Compute Subtotal
   var subtotal = 0;
+
+  // Function on generate row items
+  function generate_item_rows(product_quantities_array) {
+    for (i = 0; i < product_quantities_array.length; i++) {
+      errors = isNonNegInt(product_quantities_array[i], true);
+
+      if(errors.length == 0) {  
+        var extended_price = quantities[i] * products[i].price;
+        subtotal += extended_price;
+      }
+
+      if(product_quantities_array[i] == 0) {
+        continue;
+      }
+
+      else {
+        product_quantities_array[i] = `${product_quantities_array[i]}<br><font color="red">${errors}</font>`;
+        extended_price = 0;
+      }
+
+      document.write(`
+          <tr>
+            <td width="43%">${products[i].brand}</td>
+            <td align="center" width="11%">${product_quantities_array[i]}</td>
+            <td width="13%">$${products[i].price}</td>
+            <td width="54%">$${extended_price}</td>
+          </tr>
+          `);
+    }
+  }
+
+  function isNonNegInt(val, returnErrors) {
+    errors = []; // assume no errors at first
+    if (Number(val) != val) errors.push('Not a number!'); // Check if string is a number value
+    if (val < 0) errors.push('Negative value!'); // Check if it is non-negative
+    if (parseInt(val) != val) errors.push('Not an integer!'); // Check that it is an integer
+    return returnErrors ? errors : ((errors.length > 0) ? false : true);
+  }
 
 </script>
 
@@ -93,7 +104,7 @@
       </tr>
 
       <script>
-        // product row 
+        // Generate product row 
         generate_item_rows(quantities);
 
       </script>
@@ -103,23 +114,25 @@
       </tr>
 
       <script>
-        // Compute tax
-        var tax_rate = 0.0575;
-        var tax = tax_rate * subtotal;
+        // Generate row items
+        generate_item_rows(quantities);
 
-        // Compute shipping
+        // Compute sales tax
+        var tax_rate = 0.0575;
+        var sales_tax = subtotal * tax_rate;
+
+        // Compute shipping costs
         if (subtotal <= 50) {
-          shipping = 2;
-        }
-        else if (subtotal <= 100) {
-          shipping = 5;
-        }
-        else {
-          shipping = 0.05 * subtotal; // 5% of subtotal
+          shipping_cost = 2;
+        } else if (subtotal <= 100) {
+          shipping_cost = 5;
+        } else {
+          shipping_cost = subtotal * 0.05;
         }
 
         // Compute grand total
-        var total = subtotal + tax + shipping;
+        var grand_total = subtotal + sales_tax;
+
       </script>
 
       <tr>
