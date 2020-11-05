@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 
 app.get('/test', function (request, response, next) {
-    response.send("Got a GET to/test path");
+    response.send("Got a GET to /test path");
     next();
 });
 
