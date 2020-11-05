@@ -1,0 +1,6 @@
+./Views/display_name_template.view
+<body>
+<div style="text-align:center">
+    Nice to meet you ${POST["firstname"]} 
+</div>
+</body>
