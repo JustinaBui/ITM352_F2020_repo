@@ -1,0 +1,90 @@
+<script>
+    var products =
+        [
+        {
+                "name": "Brown Sugar Boba",
+                "price": 4.50,
+                "image": "SummerTea.jpg",
+                "type": "Drink"
+            },
+            {
+                "name": "Dalgona Milk Tea",
+                "price": 5.90,
+                "image": "DalgonaCoffee.jpg",
+                "type": "Drink"
+            },
+            {
+                "name": "English Earl Grey Milk Tea",
+                "price": 4.99,
+                "image": "RabbitRabbit.jpg",
+                "type": "Drink"
+            },
+            {
+                "name": "Chocolate Cream Souffle Pancakes",
+                "price": 11.49,
+                "image": "SoufflePc.jpg",
+                "type": "Brunch"
+            },
+            {
+                "name": "Milk N' Cereal Pancakes",
+                "price": 14.00,
+                "image": "MilknCerealPc.jpg",
+                "type": "Brunch"
+            },
+            {
+                "name": "Mana Acai Bowl",
+                "price": 8.00,
+                "image": "HaleiwaBowls.jpg",
+                "type": "Dessert"
+            },
+            {
+                "name": "Strawberry Shortcake Ice Cream",
+                "price": 7.00,
+                "image": "StrawberryShortcase.jpg",
+                "type": "Dessert"
+            }
+        ];
+
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="products-style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Items</title>
+</head>
+
+<body>
+    <h1>Aloha Sweets Store</h1>
+    <div id="navbar">
+        <form action="./invoice.html" method="GET"></form>
+    </div>
+
+    <div>
+        <main>
+            <script>
+                for (i = 1; i <= products.length; i++) {
+                    document.write(`
+        <section class="item">
+        <h2> ${products[i].name}</h2>
+        <p>  ${products[i].price}</p>
+        <label><Quantity>
+        <input type = "text" placeholder = "0" name="qty${i}">
+        <img src="./images/${products[i].image}">
+        </section>
+        `);
+                }
+            </script>
+        </main>
+
+    </div>
+    <input type="submit" value="Purchase!">
+    <footer>
+        <h1 class="footer">Your Foodie Recommendations from JBUI</h1>
+    </footer>
+</body>
+
+</html>
