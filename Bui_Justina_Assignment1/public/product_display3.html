@@ -1,0 +1,212 @@
+<!-- Copied this from w3schools format: https://www.w3schools.com/w3css/w3css_templates.asp -->
+<!--Justina Bui's Product Display Page-->
+
+<!DOCTYPE html>
+<html>
+<title>Aloha Sweets Store</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<style>
+  body,h1,h2,h3,h4,h5,h6 {
+    font-family: "", 'Lucida Sans', 'Lucida Sans Regular'
+  }
+  .w3-bar-block .w3-bar-item {
+    padding: 20px
+  }
+</style>
+<body>
+  <form name="product_main_display" action="/process_purchase" method="POST">
+    <div>
+        <main>
+            <script>
+                for (i = 0; i < products.length; i++) {
+                    document.write(`
+                            <section class="item">
+                                <h2>${products[i].name}</h2>
+                                <br><img src="${products[i].image}">
+                                <p>$${products[i].price}</p>
+                                <label id="quantity${i}_label"}">Quantity</label>
+                                <input type="text" placeholder="0" name="quantity${i}" 
+                                onkeyup="checkQuantityTextbox(this);">
+            
+                            </section>
+                        `);
+                }      
+            </script>
+        </main>
+    </div>
+    <footer>
+        <input type="submit" value="Purchase!" name="submitPurchase">
+    </footer>
+</form>
+
+  <!-- Sidebar (hidden by default) -->
+  <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left"
+    style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+    <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button">Menu</a>
+    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">About</a>
+  </nav>
+
+  
+<!-- Top menu -->
+<div class="w3-top">
+  <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
+    <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+    <div class="w3-right w3-padding-16">Your Next Destination</div>
+    <div class="w3-center w3-padding-16">Aloha Sweets Store</div>
+  </div>
+</div>
+  
+<!-- !PAGE CONTENT! -->
+<div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
+
+  <!-- First Photo Grid-->
+  <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+    <div class="w3-quarter">
+      <img src="./images/SummerTea.jpg" alt="Drink" style="width:100%">
+      <h3>Brown Sugar Milk Tea with Grass Jelly</h3>
+      <h4>$4.50</h4>
+      <p>If you are looking for a new boba shop, check out Summer Tea in Kapahulu!</p>
+    </div>
+    <div class="w3-quarter">
+      <img src="./images/DalgonaCoffee.jpg" alt="Drink" style="width:100%">
+      <h3>Dalgona Milk Tea with Dalgona Crunch and Boba</h3>
+      <h4>$5.90</h4>
+      <p>If you visit the new H-Mart in Kaka'ako, check out this delicious spot. They have coffee, shave ice, and more!</p>
+    </div>
+    <div class="w3-quarter">
+      <img src="./images/RabbitRabbit.jpg" alt="Drink" style="width:100%">
+      <h3>English Earl Grey Milk Tea with Egg Pudding</h3>
+      <h4>$4.99</h4>
+      <p>If you like a more tea tasting milk tea, check out this Aiea location! Try the Golden boba or Kyoto Matcha items</p>
+    </div>
+    <div class="w3-quarter">
+      <img src="./images/Bingsu.jpg" alt="Dessert" style="width:100%">
+      <h3>Injeolmi Bingsu (Kinako and Soybean Powder)</h3>
+      <h4>$7.95</h4>
+      <p>Love Korean culture? Try Jejubing Dessert Cafe, new pop up shop near the Ala Moana Food Court! Highly recommend the Tiramisu or Matcha flavors!</p>
+    </div>
+  </div>
+  
+  <!-- Second Photo Grid-->
+  <div class="w3-row-padding w3-padding-16 w3-center">
+    <div class="w3-quarter">
+      <img src="./images/HaleiwaBowls.jpg" alt="Dessert" style="width:100%">
+      <h3>Mana Acai Bowl</h3>
+      <h4>$8.00</h4>
+      <p>Heading to the North Shore? Try Hale'iwa Bowls' acai and smoothies! Support local businesses~</p>
+    </div>
+    <div class="w3-quarter">
+      <img src="./images/StrawberryShortcase.jpg" alt="Dessert" style="width:100%">
+      <h3>Strawberry Shortcake Roll-up Ice Cream</h3>
+      <h4>$7.00</h4>
+      <p>Top selling flavor at Sweet Creams! Absolutely delicious for a quick dessert.</p>
+    </div>
+    <div class="w3-quarter">
+      <img src="./images/MilknCerealPc.jpg" alt="Brunch" style="width:100%">
+      <h3>Milk N' Cereal Pancakes</h3>
+      <h4>$14.00</h4>
+      <p>A great go-to brunch spot in Wards!</p>
+    </div>
+    <div class="w3-quarter">
+      <img src="./images/SoufflePc.jpg" alt="Brunch" style="width:100%">
+      <h3>Chocolate Cream Souffle Pancakes</h3>
+      <h4>$11.49</h4>
+      <p>Airy pancakes with a twist. This cafe has savory items like dumplings and beverages like boba tea.</p>
+    </div>
+  </div>
+
+        <hr id="about">
+
+        <!-- About Section -->
+        <div class="w3-container w3-padding-32 w3-center">
+          <h3>About Me, The Local Foodie</h3><br>
+          <img src="./images2/Wave.JPG" alt="Me" class="w3-image" style="display:block;margin:auto" width="800"
+            height="533">
+          <div class="w3-padding-32">
+            <h4><b>I am Who I Am!</b></h4>
+            <h6><i>With Passion For Real, Good Treats</i></h6>
+            <p>Hi, my name is Justina and I love exploring new places to eat or drink! <br>
+              It's a passion of trying something fresh to step out of my comfort zone and see what is out there in the world.
+              <br>You get to see what you like or dislike while supporting local businesses. <br>
+              I highly believe that you shouldn't limit yourself to routines and push yourself to be spontaneous!
+            </p>
+          </div>
+        </div>
+        <hr>
+
+        <!-- Footer -->
+        <footer class="w3-row-padding w3-padding-32">
+          <div class="w3-third">
+            <h3>FOOTER</h3>
+            <p>Author: Justina Bui<br>
+                Class: ITM 352 - Assignment 1<br>
+                Reference: Copied this from w3schools
+                <br>https://www.w3schools.com/w3css/w3css_templates.asp
+              </p>
+            <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+          </div>
+        </footer>
+
+        <!-- End page content -->
+      </div>
+
+      <script>
+  function isNonNegInt(q, return_errors = false) { 
+      errors = []; // assume no errors at first
+      if (q == '') q = 0; //sets blank inputs to the quantitiy of 0 
+      if (Number(q) != q) errors.push('<font color="red">Not a number!</font>'); // Check if string is a number value
+      else if (q < 0) errors.push('<font color="red">Negative value!</font>'); // Check if the string is non-negative
+      else if (parseInt(q) != q) errors.push('<font color="red">Not a full value!</font>'); // Check that it is an integer
+      return return_errors ? errors : (errors.length == 0);
+  }
+  function checkQuantityTextbox(theTextbox) {
+      errs = isNonNegInt(theTextbox.value, true);
+      if (errs.length == 0) errs = ['You want:']; 
+      if (theTextbox.value.trim() == '') errs = ['Quantity'];
+      document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
+  }
+  window.onload = function () {
+      let params = (new URL(document.location)).searchParams; // get the query string
+      if (params.has('submitPurchase')) {
+          has_errors = false; // believes that quantities are correct from the start
+          total_qty = 0; // double check if item was chosen and total will be >0
+          //Display image, name, and price for each product
+          for (i = 0; i < products.length; i++) {
+              if (params.has(`quantity${i}`)) {
+                  a_qty = params.get(`quantity${i}`);
+                  product_form[`quantity${i}`].value = a_qty;
+                  total_qty += a_qty;
+                  if (!isNonNegInt(a_qty)) {
+                      has_errors = true; // if there is an invalid quantity
+                      checkQuantityTextbox(product_form[`quantity${i}`]); // points out the error 
+                  }
+              }
+          }
+          // Respond to errors and/or redirect to invoice 
+          if (has_errors) {
+              alert("Please enter only valid quantities!");
+          } else if (total_qty == 0) {
+              alert("Please select some quantities!");
+          } else {
+              window.location = `./invoice.html${document.location.search}`; 
+              window.stop;
+          }
+        }
+      }
+          // Script to open and close sidebar
+          function w3_open() {
+          document.getElementById("mySidebar").style.display = "block";
+        }
+
+        function w3_close() {
+          document.getElementById("mySidebar").style.display = "none";
+        }
+      </script>
+
+</body>
+
+</html>
+
