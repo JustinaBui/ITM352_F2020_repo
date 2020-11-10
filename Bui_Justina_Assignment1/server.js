@@ -9,8 +9,9 @@ Server File
 var express = require('express'); // express package
 var app = express(); // begin the express
 var myParser = require("body-parser"); // compiler of data into separate entities
-var data = require('./products.json'); //retrieve product data from JavaScript file
-var products = data.products; // puts 'products_array' in products_data.js file
+var data = require('./public/product_data.js'); //retrieve product data from JavaScript file
+var products_array = data.products; // puts 'products_array' in products_data.js file
+var queryString = require('./public/node_modules/query-string');
 var fs = require('fs'); // retrieve data from product_data.js
 
 app.all('*', function (request, response, next) { //for all request methods
