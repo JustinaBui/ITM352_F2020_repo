@@ -61,24 +61,7 @@
         if (errs.length == 0) errs = ['You want:']; 
         if (theTextbox.value.trim() == '') errs = ['Quantity'];
         document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
-    }
-    window.onload = function () {
-        let params = (new URL(document.location)).searchParams; // get the query string
-        if (params.has('submitPurchase')) {
-            has_errors = false; // believes that quantities are correct from the start
-            total_qty = 0; // double check if item was chosen and total will be >0
-            //Display image, name, and price for each product
-            for (i = 0; i < products.length; i++) {
-                if (params.has(`quantity${i}`)) {
-                    a_qty = params.get(`quantity${i}`);
-                    product_form[`quantity${i}`].value = a_qty;
-                    total_qty += a_qty;
-                    if (!isNonNegInt(a_qty)) {
-                        has_errors = true; // if there is an invalid quantity
-                        checkQuantityTextbox(product_form[`quantity${i}`]); // points out the error 
-                    }
-                }
-            }
+    };
             // Respond to errors and/or redirect to invoice 
             if (has_errors) {
                 alert("Please enter only valid quantities!");
@@ -87,8 +70,6 @@
             } else {
                 window.location = `./invoice.html${document.location.search}`; 
                 window.stop;
-            }
-        }
-    }
+            };
 </script>
 
