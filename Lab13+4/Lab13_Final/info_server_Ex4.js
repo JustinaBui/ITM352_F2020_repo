@@ -26,8 +26,7 @@ function process_quantity_form (POST, response) {
           response.end();
         }
      }
-
-
+     
 function isNonNegIntString (string_to_check, returnErrors=false){
     errors = []; // assume no errors at first
     if(Number(string_to_check) != string_to_check) {errors.push('Not a number!');} // Check if string is a number value
