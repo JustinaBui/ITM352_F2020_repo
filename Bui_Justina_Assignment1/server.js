@@ -9,9 +9,8 @@ Server File
 var express = require('express'); // express package
 var app = express(); // begin the express
 var myParser = require("body-parser"); // compiler of data into separate entities
-var data = require('./public/products_data.js.js').products; //retrieve product data from JavaScript file
-var products_array = data.products; // puts 'products_array' in products_data.js file
-var queryString = require('query_string');
+var data = require('./products.json'); //retrieve product data from JavaScript file
+var products = data.products; // puts 'products_array' in products_data.js file
 var fs = require('fs'); // retrieve data from product_data.js
 
 app.all('*', function (request, response, next) { //for all request methods
@@ -20,7 +19,6 @@ app.all('*', function (request, response, next) { //for all request methods
 });
 
 app.use(myParser.urlencoded({ extended: true })); //retrieve data in the body
-
 app.post("/process_purchase", function (request, response) {
     let POST = request.body; // data compiled in the body
 
