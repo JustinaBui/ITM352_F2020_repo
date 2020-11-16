@@ -1,6 +1,6 @@
 /* Reference to Lab 13 Exercise 4 Part C. Using a ./public to create a product_data.js file */
 
-products = [
+var products = [
     {
         "name": "Banh Mi",
         "price": 8.00,
