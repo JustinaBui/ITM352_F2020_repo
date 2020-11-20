@@ -74,9 +74,9 @@ app.post("/process_page", function (request, response) {
         // redirect to invoice page
         if (has_errors || total_qty == 0) {
 
-            //redirect to product page if quantity is invalid
-            console.log("redirecting to products page", has_errors, total_qty);
-            response.redirect("/products_page.html?" + qstr);
+            //redirect to product display page if quantity is invalid
+            console.log("redirecting to product display page", has_errors, total_qty);
+            response.redirect("/products_display.html?" + qstr);
 
         } else { //the quantity data is valid for invoice
             console.log("redirecting to login page");
