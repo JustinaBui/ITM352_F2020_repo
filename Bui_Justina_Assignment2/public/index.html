@@ -3,40 +3,126 @@
 <!--First Page to Enter Restaurant-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Kaushan+Script&family=Open+Sans:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Courgette&family=Kaushan+Script&family=Open+Sans:ital,wght@1,400;1,600&display=swap"
+        rel="stylesheet">
     <title>Bui's PHO-TASTIC Restaurant</title>
     <style>
         body {
             text-align: center;
-            background: lightcyan;
+            background: lightgoldenrodyellow;
             font-family: 'Kaushan Script', cursive;
-            font-size: 30px;
+            font-size: 25px;
             background-image: url(images/Display.jpg);
         }
+
         img {
             border: 5px solid #ddd;
             /* Gray border */
-            border-radius: 100px;
+            border-radius: 4px;
             /* Rounded border */
-            padding: 10px;
+            padding: 5px;
             /* Some padding */
-            width: 200px;
+            width: 5px;
             /* Set a medium width */
         }
+
         /* Add a hover effect (red shadow) */
         img:hover {
-            box-shadow: 0 0 15px 15px lightcyan;
+            box-shadow: 0 0 15px 15px lightpink;
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1>Bui's PHO-TASTIC Restaurant</h1>
     </header>
+    <!--Reference: https://www.w3schools.com/howto/howto_js_slideshow.asp-->
+    <a href="./products_display.html">
+        <div class="slideshow-container">
+
+            <div class="mySlides">
+                <img src="./images/map.png" style="width:40%">
+            </div>
+
+            <div class="mySlides">
+                <img src="./images/vietnam.jpg" style="width:40%">
+            </div>
+
+            <div class="mySlides">
+                <img src="./images/Market.jpg" style="width:40%">
+            </div>
+
+            <div class="mySlides">
+                <img src="./images/sand.jpg" style="width:40%">
+            </div>
+
+            <div class="mySlides">
+                <img src="./images/street.jpg" style="width:40%">
+            </div>
+
+            <div class="mySlides">
+                <img src="./images/sea2.jpg" style="width:40%">
+            </div>
+
+            <div class="mySlides">
+                <img src="./images/street1.jpg" style="width:40%">
+            </div>
+
+            <div class="mySlides">
+                <img src="./images/Variety.jpg" style="width:40%">
+            </div>
+
+            <div class="mySlides">
+                <img src="./images/Sea.jpg" style="width:40%">
+            </div>
+
+            <div class="mySlides">
+                <img src="./images/Pho.jpg" style="width:40%">
+            </div>
+
+            <div style="text-align:center">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+
+            <script>
+                var slideIndex = 0;
+                showSlides();
+
+                function showSlides() {
+                    var i;
+                    var slides = document.getElementsByClassName("mySlides");
+                    var dots = document.getElementsByClassName("dot");
+                    for (i = 0; i < slides.length; i++) {
+                        slides[i].style.display = "none";
+                    }
+                    slideIndex++;
+                    if (slideIndex > slides.length) { slideIndex = 1 }
+                    for (i = 0; i < dots.length; i++) {
+                        dots[i].className = dots[i].className.replace(" active", "");
+                    }
+                    slides[slideIndex - 1].style.display = "block";
+                    dots[slideIndex - 1].className += " active";
+                    setTimeout(showSlides, 3000); // Change image every 3 seconds
+                }
+            </script>
+            <footer><h3>Click the image to enter your next food destination!</h3></footer>
 
 </body>
+
 </html>

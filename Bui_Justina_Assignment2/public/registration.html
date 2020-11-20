@@ -1,0 +1,96 @@
+<!--Author: Justina Bui
+Title: Registration Page-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Customer Registration Page</title>
+    <link href = "products_style.css" rel="stylesheet">
+    <script>
+      let params = (new URL(document.location)).searchParams; //Search the parameters
+
+window.onload = function () { //Load the window
+    if (params.has('errors')) { //check if params is valid
+        //Place into textbooks
+        Register['name'].value = params.get('name'); //Create name
+        Register['username'].value = params.get('username');//Create username
+        Register['password'].value = params.get('password');//Create password
+        Register['confirmpsw'].value = params.get('confirmpsw'); //Create confirm password
+        Register['email'].value = params.get('email'); //Create email
+
+        //put up an alert if there is a reg error, 
+        alert('Fix the following errors: \n' + params.get('errors'));
+    }
+
+if (params.has('nameerrors')) { //look for name errors
+    var nameerrors = params.get('nameerrors'); //set a nameerrors variable
+    document.getElementById("namelabel").innerHTML = nameerrors; //log name errors
+}
+if (params.has('usererrors')) { //look for username errors
+    var usererrors = params.get('usererrors'); //set usererrors into a variable 
+    document.getElementById("userlabel").innerHTML = usererrors; //log username errors 
+}
+if (params.has('passerrors')) { //look for pasword errors
+    var passerrors = params.get('passerrors'); //set passerrors variable
+    document.getElementById("pswlabel").innerHTML = passerrors; //log password errors 
+} 
+if (params.has('confirmerrors')) { //look for confirm password errors
+    var confirmerrors = params.get('confirmerrors'); //set confirmerrors variable
+    document.getElementById("confirmpswlabel").innerHTML = confirmerrors; //log confirm pws errs
+} 
+if (params.has('emailerrors')) { //look for email errors
+    var emailerrors = params.get('emailerrors'); //set emailerrors variable
+    document.getElementById("emaillabel").innerHTML = emailerrors; //log email errors
+}
+  }
+    </script>
+</head>
+
+<script>
+    var password = document.getElementById("password") //password is now an object
+    repeat_password = document.getElementById("repeat_password"); // repeat password object process 
+    //Check if password is good 
+    function validatePassword(){
+      if(password.value != repeat_password.value) { //respond if pws does not match 
+        alert("Please make sure passwords match.");
+    response.redirect('public/registration.html') //redirect user back reg page when data does not match
+      } 
+    else{
+        response.redirect('Login_Successful') //repond Login Successful 
+    }
+  
+    }
+  </script>
+
+<body>
+    <!--Navigation bar-->
+    <header>
+      <h1>Bui's PHO-TASTIC Restaurant</h1>
+    </header>
+    <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./products_display.html">Order Menu</a></li>
+        <li><a href="./login.html">Log In</a></li>
+    </ul>
+    <h1>
+      Welcome! Please register an account here! 
+    </h1>
+    <!--Registration form and onclick button-->
+    <div style="padding:1px 16px;height:1000px;">
+        <div> 
+                <form method="POST" action="/register_user" onsubmit=validatePassword() name="registrationform">
+                  <input type="text" name="fullname" size="40" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+" maxlength="35" placeholder="Enter First & Last Name"><br />
+                  <input type="text" name="username" size="40" pattern=".[a-z0-9]{3,10}" required title="Minimum 5 Characters, Maximum 10 Characters, Numbers/Letters Only" placeholder="Enter Username" ><br />
+                  <input type="email" name="email" size="40" placeholder="Enter Email" pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{3,}$" required title="Please enter valid email."><br />
+                  <input type="password" id="password" name="password"  size="40" pattern=".{8,}" required title="8 Characters Minimum" placeholder="Enter Password"><br />
+                  <input type="password" id="repeat_password" name="repeat_password" size="40" pattern=".{8,}" required title="8 Characters Minimum" placeholder="Repeat Password"><br />
+                  <input type="submit" value="Submit" id="submit">
+              </form></div>
+<!--Direct form-->
+              <script>
+              registrationform.action += document.location.search;
+              </script>
+</body>
+</html>

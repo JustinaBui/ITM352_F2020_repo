@@ -1,21 +1,28 @@
+<!--Author: Justina Bui-->
 <!--Reference from Invoice 4 WOD to create my Invoice page-->
 <script src="./product_data.js" type="text/javascript">//code to use get request for product list</script>
 <script>
-    //Reference and Copied from Invoice 4 Lecture Video
+    //Create Username for Invoice page
     let params = (new URL(document.location)).searchParams; //Use the parse to start the file, quantity, and purchase process
-    var quantities = []; //puts quantities into array 
-    if (params.has('submitPurchase')) { //cretes a loop
+    if (params.has('username')) { //if it has this username, look for it
+    username = (params.get('username')); { //display username if in system
+    } else {
+        window.location.href="./login.html" + window.location.search;
+    }
+}
+    var quantities = []; //puts quantities into an array
+    if (params.has('purchase_submit')) {  //creates a loop
         for (i = 0; i < products.length; i++) {
             if (params.has(`quantity${i}`)) {
                 a_qty = params.get(`quantity${i}`);
                 quantities[i] = a_qty;
             }
-            else {
-                document.write('No Form Submitted. Please Complete Purchase!')
-            }
-            console.log(quantities); // Write out quantities
         }
-    }
+    } else {
+        window.location.href="./products_display.html" + window.location.search;
+        }  
+        console.log(quantities); // Write out quantities
+        }
 </script>
 
 <!DOCTYPE html>
@@ -24,9 +31,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bui's PHO-TASTIC Restaurant</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Kaushan+Script&family=Open+Sans:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
     <link href="products-style.css" rel="stylesheet">
-    <title>Bui's PHO-TASTIC Restaurant</title>
     <style>
         body {
             background: lightyellow;
@@ -42,7 +50,11 @@
 </head>
 
 <body>
-    <h1>Bui's PHO-TASTIC Restaurant Invoice</h1>
+    <header><h1>Bui's PHO-TASTIC Restaurant Invoice</h1></header>
+    <ul>
+        <li><a class="active" href="./index.html">Home</a></li>
+        <li><a href="./products_display.html">Order Delicious Food</a></li>
+      </ul>
         <table border="2">
             <tbody>
                 <tr>
@@ -81,6 +93,7 @@
                         }
                         // Compute Grand Total
                         grand_total = subtotal + tax + delivery_cost;
+                
                 </script>
                 <tr>
                     <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
@@ -126,6 +139,13 @@
             <br>
             Please contact us if you have any questions, thank you!***
         </b>
+        <br>
+        <footer>
+            <h4>
+                <script>document.write(`Cảm ơn bạn ${username} for placing an order`);</script>
+            </h4>
+        </footer>
+
 </body>
 
 </html>

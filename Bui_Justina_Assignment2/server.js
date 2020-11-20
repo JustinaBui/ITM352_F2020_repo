@@ -147,6 +147,7 @@ app.post("/register_user", function (request, response) { //Use Post Method, dat
     username = request.body.username;//saves new username to "users_reg_data" filename
     theQtyQuerystring = qs.stringify(request.query); // state querystring variable
 
+    //establish variables for my section errors
     var errors = []; //record all errors
     var nameerrors = []; //record all name errors
     var usererrors = []; //record username errors
@@ -154,6 +155,8 @@ app.post("/register_user", function (request, response) { //Use Post Method, dat
     var confirmerrors = []; //record confirm password errors
     var emailerrors = []; //record email errors
 
+    //Reference to Lab 11: https://dport96.github.io/ITM352/morea/120.functions/experience-functions.html
+    
     //Name Check 
     if (request.body.name == "") { //when no name is given
         nameerrors.push('Full Name is invalid'); //reply with this message and push name error
@@ -164,6 +167,8 @@ app.post("/register_user", function (request, response) { //Use Post Method, dat
         nameerrors.push('Full Name is too Long, try again!') //reply with this message and push name errors
         errors.push('Full Name is too Long, try again!') //push array error
     }
+
+    // Reference to the alphabet code: http://www.tutorialspark.com/javascript/JavaScript_Regular_Expression_Form_Validation.php
 
     //Full name format to have alphabet letters only
     if (/^[A-Za-z]+$/.test(request.body.name)) { //No response if name is okay
@@ -283,6 +288,8 @@ app.post("/register_user", function (request, response) { //Use Post Method, dat
 }
 );
 
+//Route for all HTTP request 
+// Reference: https://www.geeksforgeeks.org/express-js-app-all-function/
 app.all('*', function (request, response, next) {
     console.log(request.method + ' to ' + request.path);
     next();

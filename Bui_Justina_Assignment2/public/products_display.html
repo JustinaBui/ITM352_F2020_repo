@@ -18,19 +18,20 @@
         document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
     }
     window.onload = function () {
-        let params = (new URL(document.location)).searchParams; // get the query string
-        if (params.has('submitPurchase')) {
+        let params = (new URL(document.location)).searchParams; // get the query string and form data
+        //When quantities are good, it will go to Invoice
+        if (params.has('purchase_submit')) {
             has_errors = false; // believes that quantities are correct from the start
             total_qty = 0; // double check if item was chosen 
             //Display image, name, and price for each product
             for (i = 0; i < products.length; i++) {
                 if (params.has(`quantity${i}`)) {
                     a_qty = params.get(`quantity${i}`);
-                    product_form[`quantity${i}`].value = a_qty;
+                    product_selection_form[`quantity${i}`].value = a_qty;
                     total_qty += a_qty;
                     if (!isNonNegInt(a_qty)) {
                         has_errors = true; // if there is an invalid quantity
-                        checkQuantityTextbox(product_form[`quantity${i}`]); // points out the error 
+                        checkQuantityTextbox(product_selection_form[`quantity${i}`]); // points out the error 
                     }
                 }
             }
@@ -38,17 +39,18 @@
             if (has_errors) {
                 alert("Please enter only valid quantities!");
             } else if (total_qty == 0) {
-                alert("Please select some quantities!");
-            } else {
+                alert("Please select some quantities to order!");
+        } else {
                 window.location = `./invoice.html${document.location.search}`;
                 window.stop;
-            }
         }
     }
+}
 </script>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,27 +60,38 @@
         href="https://fonts.googleapis.com/css2?family=Courgette&family=Kaushan+Script&family=Open+Sans:ital,wght@1,400;1,600&display=swap"
         rel="stylesheet">
     <link href="products-style.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="./navbar.css">
     <style>
         body {
-            text-align: center;
-            background: lightgoldenrodyellow;
-            background-image: url(./images/vietnam.jpg);
-            font-family: 'Kaushan Script', cursive;
-        }
+            text-align: center;}        }
     </style>
 </head>
+
 <body>
-    <form name="order_form" action="./invoice.html" method="GET">
+    <!--USE POST METHOD! not get, does not store data in URL-->
+    <form name="product_selection_form" action="process_page" method="POST">
         <header>
             <h1>Bui's PHO-TASTIC Restaurant</h1>
+              <!-- About Section -->
+  <div class="w3-container w3-padding-32 w3-center">  
+    <div class="w3-padding-32">
+      <h2><i>With Passion For Real, Good Food</i></h2>
+  </div>
+  <hr>
         </header>
-        <div>
+        <!--TABS-->
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./products_display.html">Order Menu</a></li>
+            <li><a href="./login.html">Log In</a></li>
+        </ul>
+
+        <div class="productsbox">
             <main>
                 <script>
                     for (i = 0; i < products.length; i++) {
                         document.write(`
-                                <section class="item">
+                        <section class="item">
                                     <h2>${products[i].name}</h2>
                                     <br><img src="${products[i].image}">
                                     <p>$${products[i].price}</p>
@@ -86,16 +99,24 @@
                                     <input type="text" placeholder="0" name="quantity${i}" 
                                     onkeyup="checkQuantityTextbox(this);">
                                 </section>
-                            `);
+                                `);
                     }      
                 </script>
             </main>
         </div>
+        <!--Create a Purchase Button-->
         <footer>
             <br>
-            <input type="submit" value="Purchase Order!" name="submitPurchase">
-            <h1 class="footer">Satisfy your food cravings NOW!</h1>
+            <input type="submit" value="Purchase Order!" name="submitPurchase" class=btn>
         </footer>
     </form>
+    <!--Reference:https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_templates_clothing_store&stacked=h -->
+      <!-- Footer -->
+  <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
+    <div class="w3-row-padding">
+      <div class="w3-col s4">
+        <p>Contact Information <br> <br> P: 808-123-4567 E: dabui@mail.com<br></p>
+      </div>
+
 </body>
 </html>

@@ -1,0 +1,50 @@
+<!--Author: Justina Bui-->
+<!--Title: Login Page-->
+<!--Reference: https://www.w3schools.com/howto/howto_css_register_form.asp-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bui's PHO-Tastic Restaurant Login</title>
+    <link href="products-style.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <!--Navigation Bar-->
+    <header>
+        <h1>Bui's PHO-Tastic Restaurant</h1>
+    </header>
+    <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./products_display.html">Menu</a></li>
+        <li><a class="active" href="./login.html">Log In</a></li>
+    </ul>
+    <div style="padding:1px 16px;height:1000px;">
+        <h2> Hello! Please Log In To Continue!</h2>
+        <!--Form for the login-->
+        <form name="loginform" method="POST" action="/check_login">
+            <div>
+                <input type="text" name="username" size="40" placeholder="enter username"><br />
+                <input type="password" name="password" size="40" placeholder="enter password"><br />
+                <input type="submit" value="login" id="submit"> </div>
+        </form>
+</body>
+
+<h2>New User? Please Proceed to Create an Account BELOW!</h2>
+
+<body>
+<!--Registration Button-->
+    <div> 
+        <input type="button" class="button" value="Create Account Here" id="regbutton" name="register_here" 
+        onclick = "location.href=`./registration.html${document.location.search}`"; 
+        >
+    </div> 
+</body>
+<script>
+    loginform.action += document.location.search; //look for login form
+    </script>
+</html>
