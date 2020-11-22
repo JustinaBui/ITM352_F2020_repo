@@ -13,5 +13,10 @@
         "name": "ITM 352",
         "password": "grader",
         "email": "itm352@hawaii.edu"
+    },
+    "jbui": {
+        "name": "Justina Bui",
+        "password": "student123",
+        "email": "buijn@hawaii.edu"
     }
 }

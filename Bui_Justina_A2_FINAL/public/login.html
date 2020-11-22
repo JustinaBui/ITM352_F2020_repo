@@ -1,0 +1,102 @@
+<!--Author: Justina Bui -->
+<!--Login page where user can login into their account-->
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bui's PHO-TASTIC Restaurant Login</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
+    <link href="order_style.css" rel="stylesheet">
+    <style>
+    /*Display Style*/
+        body {
+            text-align: center;
+            font-family: 'Amatic SC';
+            color: black;
+            font-size: 30px;
+            background-color: lightgoldenrodyellow;
+            background-image: url(./images/Scene.jpg);
+        }
+        img {
+        width: 300px;
+        height: 300px;
+        }
+        div {
+        column-count: inherit;
+        column-gap: 30px;
+        column-rule-style: solid;
+        column-rule-color: lightgoldenrodyellow;
+        column-rule-width: 4px;
+        padding: 2em; 
+        border-style: solid;
+        border-color: black;
+        margin-top: 0px;
+        text-align: center;
+        }
+        h1 {
+        font-family: 'Amatic SC';
+        font-size: 70px;
+        }
+        h2 {
+        display: inline;
+        vertical-align: top;
+        color: black;
+        font-family: 'Amatic SC';
+        font-size: 50px;
+        }
+        main {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+        font-size: 25px;
+        } 
+        p {
+        text-align: center;
+        font-size: 35px;
+        }
+        </style>
+</head>
+
+<body>
+    <!--the following code is for the navigation bar-->
+    <header>
+        <h1>Bui's PHO-TASTIC Restaurant Customer Log-In</h1>
+    </header>
+    <ul>
+            <li><a href="./menu_display.html">Home</a></li>
+            <li><a href="./order_display.html">Order</a></li>
+            <li><a href="./reg.html">Registration</a></li>
+            <li><a class="active" href="./login.html">Log In</a></li>
+    </ul>
+    <div style="padding:1px 16px;height:1000px;">
+        <h2> Log In To Continue Your Purchase!</h2>
+        <!--the following code is the form for the login page-->
+        <form name="loginform" method="POST" action="/check_login">
+            <div>
+                <input type="text" name="username" size="40" placeholder="enter username"><br />
+                <input type="password" name="password" size="40" placeholder="enter password"><br />
+                <input type="submit" value="login" id="submit"> </div>
+        </form>
+</body>
+
+<h2>Don't Have An Account? Create One Below!</h2>
+
+<body>
+    <!--the following code is for the button for registration-->
+    <div> 
+        <input type="button" class="button" value="Create Account Here" id="regbutton" name="register_here" 
+        onclick = "location.href=`./reg.html${document.location.search}`"; 
+        >
+        <!--the above onclick directs the user to where it wants to go upon clicking the button-->
+    </div>
+    
+    </body>
+    
+    <script>
+    loginform.action += document.location.search;
+    </script>
+    </html>

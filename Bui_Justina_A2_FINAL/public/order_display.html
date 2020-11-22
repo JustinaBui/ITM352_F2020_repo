@@ -57,8 +57,6 @@
     <title>Bui's PHO-TASTIC Restaurant</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
-    <link href="order_style.css" rel="stylesheet">
-
     <style>
     /*Order Display Style*/
         body {
@@ -126,11 +124,15 @@
 <body>
 
     <!-- Navbar (sit on top) -->
-    <a href="menu_display.html" class="w3-bar-item w3-button">HOME</a>
+    <ul>
+        <a href="menu_display.html" class="w3-bar-item w3-button">HOME</a>
+        <a href="./reg.html"class="w3-bar-item w3-button">Register</a>
+        <a href="./login.html" class="w3-bar-item w3-button">Log In</a>
+      </ul>
 
         <!--Product display page-->
 
-    <form name="order_form" action="./invoice.html" method="POST">
+    <form name="order_form" action="./invoice.html" method="GET">
         <header>
             <h1>Bui's PHO-TASTIC Restaurant</h1>
         </header>
