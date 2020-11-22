@@ -2,19 +2,9 @@
 Reference: info_server_Ex4.js from Lab 13 Exercise 4 and Lab 14 File I/O
 Title: Assignment 2*/
 
-//check the isNonNegInt function from Lab 13
-function isNonNegInt(q, returnErrors = false) {
-    errors = [];
-    if (q == "") { q = 0; }
-    if (Number(q) != q) errors.push('Not a number!'); //check if the string a new number
-    if (q < 0) errors.push('Negative value!'); //check if value is not negative / is positive
-    if (parseInt(q) != q) errors.push('Not an integer!'); //check if value is an integar 
-    return returnErrors ? errors : (errors.length == 0);
-}
-
 //Copied from Lab 13 to generate Server Side Processing using Express
 var data = require('./public/product_data.js'); // Link to my product_data.js to get data
-var products = data.products; // Put my products from product_data.js into an array (list of items)
+var products = require("./public/product_data.js"); // Put my products from product_data.js into an array (list of items)
 
 //Use Querystring to get variable values 
 const querystring = require('querystring'); //the server will to all errors
@@ -28,7 +18,6 @@ var myParser = require("body-parser"); // Gives access to post data
 
 var qs = require('querystring'); //quantities to be carried over
 var qstr = {};
-var foodquantity = {};
 
 // Invoice, it will check if quantities are valid or take user back to order webpage
 app.all('*', function (request, response, next) { //link to my request method of POST
@@ -113,7 +102,7 @@ function isNonNegInt(q, return_errors = false) {
     return return_errors ? errors : (errors.length == 0);
 }
 
-app.post("/check_login", function (request, response) {
+app.post("./check_login", function (request, response) {
     //Process login form POST
     console.log(request.query, request.body);//get data from the body 
     the_username = request.body.username; //get data for username
@@ -127,14 +116,14 @@ app.post("/check_login", function (request, response) {
         if (users_reg_data[the_username].password == request.body.password) { //passwords should match 
 
             //Developed a querystring for invoice
-            response.redirect('/invoice.html?' + theQtyQuerystring + `&username=${the_username}`);
+            response.redirect('./invoice.html' + theQtyQuerystring + `&username=${the_username}`);
             return;
         } else {
-            response.redirect('/login.html?' + theQtyQuerystring); // redirect to login page when login is invalid
+            response.redirect('./invoice.html' + theQtyQuerystring); // redirect to login page when login is invalid
         }
     }
     response.send(`${username} registered!`); //when it does work, user will be registered
-    response.redirect('/invoice.html?' + theQtyQuerystring + `&username=${the_username}`); // redirect to login page when login is invalid
+    response.redirect('./invoice.html' + theQtyQuerystring + `&username=${the_username}`); // redirect to login page when login is invalid
 });
 
 app.post("/register_user", function (request, response) { //Use Post Method, data will not display in URL
@@ -267,7 +256,7 @@ app.post("/register_user", function (request, response) { //Use Post Method, dat
     //Record in JSON file
         fs.writeFileSync(filename, JSON.stringify(users_reg_data));
         console.log(theQtyQuerystring, "Redirect to invoice");
-        res.redirect('./invoice.html?' + theQtyQuerystring + `&username=${the_username}`);
+        res.redirect('./invoice.html' + theQtyQuerystring + `&username=${the_username}`);
         return; //redirect to the invoice
     }
     //Assert errors into querystring
@@ -281,7 +270,7 @@ app.post("/register_user", function (request, response) { //Use Post Method, dat
 
         request.query.errors = errors.join(';'); //place all errors into querystring
         console.log(errors);
-        res.redirect('./public/reg.html?' + theQtyQuerystring) //add query from reg page and invoice when the register page reloads
+        res.redirect('./public/reg.html' + theQtyQuerystring) //add query from reg page and invoice when the register page reloads
     }
 }
 );
