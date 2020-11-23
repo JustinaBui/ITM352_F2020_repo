@@ -4,7 +4,7 @@ Title: Assignment 2*/
 
 //Copied from Lab 13 to generate Server Side Processing using Express
 var data = require('./public/product_data.js'); // Link to my product_data.js to get data
-var products = require("./public/product_data.js"); // Put my products from product_data.js into an array (list of items)
+var products = data.products; // Put my products from product_data.js into an array (list of items)
 
 //Use Querystring to get variable values 
 const querystring = require('querystring'); //the server will to all errors
@@ -20,6 +20,7 @@ var qs = require('querystring'); //quantities to be carried over
 var qstr = {};
 
 // Invoice, it will check if quantities are valid or take user back to order webpage
+// Reference: https://www.geeksforgeeks.org/express-js-app-all-function/
 app.all('*', function (request, response, next) { //link to my request method of POST
     console.log(request.method + ' to ' + request.path); //write the request and path 
     next(); //continue the process 
@@ -63,7 +64,7 @@ app.post("/process_page", function (request, response) {
 
             //redirect to product display page if quantity is invalid
             console.log("redirecting to product display page", has_errors, total_qty);
-            response.redirect("/products_display.html?" + qstr);
+            response.redirect("/order_display.html?" + qstr);
 
         } else { //the quantity data is valid for invoice
             console.log("redirecting to login page");
@@ -101,8 +102,26 @@ function isNonNegInt(q, return_errors = false) {
     else if (parseInt(q) != q) errors.push('<font color="red">Please put a whole number.</font>'); //check if value is a whole, real number
     return return_errors ? errors : (errors.length == 0);
 }
+app.post("/check_purchase", function (request, response) {
+//validate quantities//
+haserrors = false;
 
-app.post("./check_login", function (request, response) {
+
+
+
+
+//if quantities are valid, send them to the log in; query string with quantity data
+quantityqs = qs.stringify(request.body); 
+if (!haserrors) {
+    response.redirect("./login.html?" + quantityqs) 
+
+} else { 
+    //back to process_order form (alert box or redirect back to order page) 
+response.redirect("./order_display.html?" + quantityqs) 
+}
+});
+
+app.post("/check_login", function (request, response) {
     //Process login form POST
     console.log(request.query, request.body);//get data from the body 
     the_username = request.body.username; //get data for username
@@ -116,14 +135,14 @@ app.post("./check_login", function (request, response) {
         if (users_reg_data[the_username].password == request.body.password) { //passwords should match 
 
             //Developed a querystring for invoice
-            response.redirect('./invoice.html' + theQtyQuerystring + `&username=${the_username}`);
+            response.redirect('./invoice.html?' + theQtyQuerystring + `&username=${the_username}`);
             return;
         } else {
-            response.redirect('./invoice.html' + theQtyQuerystring); // redirect to login page when login is invalid
+            response.redirect('./invoice.html?' + theQtyQuerystring); // redirect to login page when login is invalid
         }
     }
     response.send(`${username} registered!`); //when it does work, user will be registered
-    response.redirect('./invoice.html' + theQtyQuerystring + `&username=${the_username}`); // redirect to login page when login is invalid
+    response.redirect('./invoice.html?' + theQtyQuerystring + `&username=${the_username}`); // redirect to login page when login is invalid
 });
 
 app.post("/register_user", function (request, response) { //Use Post Method, data will not display in URL
@@ -256,7 +275,7 @@ app.post("/register_user", function (request, response) { //Use Post Method, dat
     //Record in JSON file
         fs.writeFileSync(filename, JSON.stringify(users_reg_data));
         console.log(theQtyQuerystring, "Redirect to invoice");
-        res.redirect('./invoice.html' + theQtyQuerystring + `&username=${the_username}`);
+        res.redirect('./invoice.html?' + theQtyQuerystring + `&username=${the_username}`);
         return; //redirect to the invoice
     }
     //Assert errors into querystring
@@ -270,17 +289,10 @@ app.post("/register_user", function (request, response) { //Use Post Method, dat
 
         request.query.errors = errors.join(';'); //place all errors into querystring
         console.log(errors);
-        res.redirect('./public/reg.html' + theQtyQuerystring) //add query from reg page and invoice when the register page reloads
+        res.redirect('./public/reg.html?' + theQtyQuerystring) //add query from reg page and invoice when the register page reloads
     }
 }
 );
-
-//Route for all HTTP request 
-// Reference: https://www.geeksforgeeks.org/express-js-app-all-function/
-app.all('*', function (request, response, next) {
-    console.log(request.method + ' to ' + request.path);
-    next();
-});
 
 //Professor Port helped me understand where to format the code so my server will listen on port 8080
 app.use(express.static('./public')); //looks for files in the public directory (make a get request, look into public and see if it has the file)
