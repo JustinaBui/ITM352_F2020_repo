@@ -103,7 +103,7 @@ Title: Registration Page-->
   <!--Registration form and onclick button-->
   <div style="padding:1px 16px;height:1000px;">
     <div>
-      <form method="POST" action="/process_registration" name="registration">
+      <form method="POST" action="/process_registration" name="register">
         <input type="text" name="fullname" size="40" pattern="[a-zA-Z]+[ ]+[a-zA-Z]+" maxlength="40"
           placeholder="Enter First & Last Name"><br />
 
@@ -123,7 +123,7 @@ Title: Registration Page-->
     </div>
     <!--Direct form-->
     <script>
-      registrationform.action += document.location.search;
+      register.action += document.location.search;
     </script>
 
 </body>

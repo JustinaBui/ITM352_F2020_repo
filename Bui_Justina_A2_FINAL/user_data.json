@@ -18,5 +18,10 @@
         "name": "Justina Bui",
         "password": "student123",
         "email": "jbui@gmail.com"
+    },
+    "soccer18": {
+        "name": "Soccer Team",
+        "password": "winner123",
+        "email": "soccer@gmail.com"
     }
 }
