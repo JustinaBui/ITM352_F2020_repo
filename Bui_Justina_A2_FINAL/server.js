@@ -119,60 +119,63 @@ app.post("/process_registration", function (request, response) {
     if ((/.{3,10}/.test(POST['username'])) && (/^[a-zA-Z0-9]*$/.test(POST['username']))) {
         console.log('Username is Valid'); //Check in the console 
     } else {
+
+
         errors.push('Username must have at least 4 characters, try again'); //push array error
-
-        //Username Guidelines (must be original and unique)
-        var reg_user = POST['username'].toLowerCase(); //form a case insensitive
-        if (typeof users_reg_data[reg_user] != 'undefined') { //if username is already created in reg data
-            errors.push('Username is already taken. Please enter a New Username.') //push error to array
-        } else {
-            console.log('New Username Here'); //check in the console 
-        }
-
-        //Email Guidelines
-        //Determine email validation 
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(POST['email'])) {
-            console.log('Email is Valid'); //check in the console
-        } else { //Send an Error if email does not meet requirement
-            errors.push('Email is invalid, try again') //push to errors array
-        }
-
-        //Password Guidelines + Information Validation 
-        //Determine if password meets the 6 character requirement
-        if (POST['password'].length < 6) { //if password does not meet the 6 characters requirement
-            errors.push('Password is too Short, try again!') //push error to array
-        } else {
-            console.log('Password was successful!');
-        }
-        //Check if password matches 
-        if (POST['password'] == POST['repeat_pws']) {
-            console.log('Password is valid'); //check if the statement functions
-        } else {
-            errors.push('Password is invalid, try again') //push error to array
-        }
-
-        //Go to the user's account if everything matches and no errors were found 
-        if (errors.length == 0) {
-            console.log('No Errors Found');
-            //Using the POST, the JSON file will register the user infomation
-            //establish variables for my section errors
-            fs.writeFileSync(filename, data, "utf-8");
-            var username = POST["username"];
-            user_data[username] = {};
-            user_data[username].name = POST['newname'];
-            user_data[username].password = POST['password'];
-            user_data[username].email = POST['email'];
-            users_reg_data = JSON.stringify(user_data);
-            //When order is placed, refirect to Invoice page
-            response.redirect('./invoice.html?' + queryString.stringify(request.query));
-        }
-        //When in doubt, tell user that there were errors and to try again 
-        if (errors.length > 0) {
-            console.log(errors); //indicate what errors were there
-            response.send('Please review input, errors were found' + errors + " ");
-        }
     }
+    //Username Guidelines (must be original and unique)
+    var reg_user = POST['username'].toLowerCase(); //form a case insensitive
+    if (typeof users_reg_data[reg_user] != 'undefined') { //if username is already created in reg data
+        errors.push('Username is already taken. Please enter a New Username.') //push error to array
+    } else {
+        console.log('New Username Here'); //check in the console 
+    }
+
+    //Email Guidelines
+    //Determine email validation 
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(POST['email'])) {
+        console.log('Email is Valid'); //check in the console
+    } else { //Send an Error if email does not meet requirement
+        errors.push('Email is invalid, try again') //push to errors array
+    }
+
+    //Password Guidelines + Information Validation 
+    //Determine if password meets the 6 character requirement
+    if (POST['password'].length < 6) { //if password does not meet the 6 characters requirement
+        errors.push('Password is too Short, try again!') //push error to array
+    } else {
+        console.log('Password was successful!');
+    }
+    //Check if password matches 
+    if (POST['password'] == POST['repeat_pws']) {
+        console.log('Password is valid'); //check if the statement functions
+    } else {
+        errors.push('Password is invalid, try again') //push error to array
+    }
+
+    //Go to the user's account if everything matches and no errors were found 
+    if (errors.length == 0) {
+        console.log('No Errors Found');
+        //Using the POST, the JSON file will register the user infomation
+        //establish variables for my section errors
+        fs.writeFileSync(filename, data, "utf-8");
+        var username = POST["username"];
+        user_data[username] = {};
+        user_data[username].name = POST['newname'];
+        user_data[username].password = POST['password'];
+        user_data[username].email = POST['email'];
+        users_reg_data = JSON.stringify(user_data);
+        //When order is placed, refirect to Invoice page
+        response.redirect('./invoice.html?' + queryString.stringify(request.query));
+    }
+    //When in doubt, tell user that there were errors and to try again 
+    else {
+        console.log(errors); //indicate what errors were there
+        response.send(`<script>alert("Please review input, errors were found ${errors.join(" ")}"); window.history.back();</script>`);   
+    }
+
 });
+
 
 //Log-in Application; creating a checkout process form for invoice 
 app.post("/process_form", function (request, response) {
