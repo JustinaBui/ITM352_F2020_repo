@@ -2,8 +2,16 @@
 <!--Login page where user can login into their account-->
 
 <html lang="en">
-
 <head>
+    <script>
+        let params = (new URL(document.location)).searchParams;
+        window.onload = function () {
+        //Set up a code where there is an error found 
+            if (params.has('login_error')) {
+        alert('Invalid Username and/or Passowrd');
+            }   
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -70,14 +78,15 @@
     </header>
     <ul>
             <a href="./menu_display.html">Home</a>
-            <a href="./order_display.html">Order</a>
+            <a class="active" href="./order_display.html">Order</a>
             <a href="./reg.html">Registration</a>
-            <a class="active" href="./login.html">Log In</a>
+            <a href="./login.html">Log In</a>
     </ul>
+
     <div style="padding:1px 16px;height:1000px;">
         <h2> Log In To Continue Your Purchase!</h2>
         <!--the following code is the form for the login page-->
-        <form name="loginform" method="POST" action="/check_login">
+        <form name="login" method="POST" action="process_login">
             <div>
                 <input type="text" name="username" size="40" placeholder="enter username"><br />
                 <input type="password" name="password" size="40" placeholder="enter password"><br />
@@ -99,7 +108,7 @@
     </body>
     
     <script>
-    loginform.action += document.location.search;
+    login.action += document.location.search; //create a desination 
     
     </script>
     </html>

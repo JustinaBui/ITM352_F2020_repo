@@ -11,13 +11,13 @@
         return return_errors ? errors : (errors.length == 0);
     }
     //checks if the data has errors 
-    function checkQuantityTextbox(theTextbox) {
-        errs = isNonNegInt(theTextbox.value, true);
-        if (errs.length == 0) errs = ['You want to order:'];
+    function checkQuantityTextbox(theTextbox) { //Function for error message if input is invalid 
+        errs = isNonNegInt(theTextbox.value, true); //Set up errors to isNonNegInt 
+        if (errs.length == 0) errs = ['You want to order:']; //When quantities are entered, this will pop up 
         if (theTextbox.value.trim() == '') errs = ['Quantity'];
         document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
     }
-    window.onload = function () {
+    window.onload = function () { //File load 
         let params = (new URL(document.location)).searchParams; // get the query string
         if (params.has('submitPurchase')) {
             has_errors = false; // believes that quantities are correct from the start
@@ -26,19 +26,19 @@
             for (i = 0; i < products.length; i++) {
                 if (params.has(`quantity${i}`)) {
                     a_qty = params.get(`quantity${i}`);
-                    order_form[`quantity${i}`].value = a_qty;
+                    process_form[`quantity${i}`].value = a_qty;
                     total_qty += a_qty;
                     if (!isNonNegInt(a_qty)) {
                         has_errors = true; // if there is an invalid quantity
-                        checkQuantityTextbox(order_form[`quantity${i}`]); // points out the error 
+                        checkQuantityTextbox(process_form[`quantity${i}`]); // points out the error 
                     }
                 }
             }
             // Respond to errors and/or redirect to invoice, used from Port's Assignment 1 description example
             //Reference: 
-            if (has_errors) {
+            if (has_errors) { //Redirect to invoice if everything is goood
                 alert("Please enter only valid quantities!");
-            } else if (total_qty == 0) {
+            } else if (total_qty == 0) { //no quantity selected, just an alert
                 alert("Please select some quantities!");
             }  
         }
@@ -126,11 +126,13 @@
         <a href="menu_display.html" class="w3-bar-item w3-button">HOME</a>
         <a href="./reg.html"class="w3-bar-item w3-button">Register</a>
         <a href="./login.html" class="w3-bar-item w3-button">Log In</a>
+        <a class="active" href="./invoice.html" class="w3-bar-item w3-button">Invoice</a>
+        
       </ul>
 
         <!--Product display page-->
 
-    <form name="order_form" action="./check_purchase" method="POST">
+    <form name="purchase" method="POST" action="/process_purchase">
         <header>
             <h1>Bui's PHO-TASTIC Restaurant</h1>
         </header>

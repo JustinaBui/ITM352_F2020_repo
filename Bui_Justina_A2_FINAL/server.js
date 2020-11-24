@@ -7,24 +7,14 @@ var data = require('./public/product_data.js'); // Link to my product_data.js to
 var products = data.products; // Put my products from product_data.js into an array (list of items)
 
 //Use Querystring to get variable values 
-const querystring = require('querystring'); //the server will to all errors
+const queryString = require('querystring'); //the server will to all errors
 var filename = 'user_data.json' //setting a variable to retrieve user data and store it there
 var fs = require('fs'); //file system loading
 
-// Express = Node.js will connect with the http module 
+// Express = Node.js will connect with the http module
 var express = require('express'); // Starts a new Express application
 var app = express(); // Begins Express, put module into app 
 var myParser = require("body-parser"); // Gives access to post data 
-
-var qs = require('querystring'); //quantities to be carried over
-var qstr = {};
-
-// Invoice, it will check if quantities are valid or take user back to order webpage
-// Reference: https://www.geeksforgeeks.org/express-js-app-all-function/
-app.all('*', function (request, response, next) { //link to my request method of POST
-    console.log(request.method + ' to ' + request.path); //write the request and path 
-    next(); //continue the process 
-});
 
 // Assignment 2 Component
 if (fs.existsSync(filename)) { //checks if the file already exists in the path
@@ -38,38 +28,173 @@ if (fs.existsSync(filename)) { //checks if the file already exists in the path
     console.log("Hello! Sorry..." + filename + 'does not exist!'); //when there is no file name of such, it will send this notice
 }
 
+// Invoice, it will check if quantities are valid or take user back to order webpage
+// Reference: https://www.geeksforgeeks.org/express-js-app-all-function/
+app.all('*', function (request, response, next) { //link to my request method of POST
+    console.log(request.method + ' to ' + request.path); //write the request and path 
+    next(); //continue the process 
+});
+
 app.use(myParser.urlencoded({ extended: true })); //get data from the body 
 
-//Login-in Application (how users will access the log in component)
-app.post("/process_page", function (request, response) {
+
+//Copied from Yamamoto, R. 
+//Example from Lab 13 Exercise 4 
+//Checks if order page was valid = take data from querystr to transfer in Invoice 
+app.post("/process_purchase", function (request, response) {
     //check for valid quantities and look up request.query
-    console.log(request.body);
-    var params = request.body; //params is an object and short for parameters; will route the properties
-    if (typeof params['purchase_submit'] != 'undefined') { //reply undefined, if info does not match
-        has_errors = false; // assume that quantity is valid
-        total_qty = 0; // check for values and if total > 0
-        for (i = 0; i < products.length; i++) {
-            console.log(i, params[`quantity${i}`]);
-            if (typeof params[`quantity${i}`] != 'undefined') {
-                a_qty = params[`quantity${i}`];
-                total_qty += a_qty;
-                if (!isNonNegInt(a_qty)) {
-                    has_errors = true; // check if there is invalid data
-                }
-            }
-        }
-        qstr = querystring.stringify(request.body); //send data to web server
-        // redirect to invoice page
-        if (has_errors || total_qty == 0) {
+    let POST = request.body;
+    if (typeof POST['submitPurchase'] != 'undefined') { //reply undefined if info does not match 
+        var has_valid_qtys = true; //assumes that quantity is invalid 
+        var has_qtys = false; //assumes that quantity is valid
+        //create a loop to ensure quantities are valid
+        for (var i = 0; i < products.length; i++) {
+            var qty = POST[`quantity${i}`];
+            has_qtys = has_qtys|| qty > 0
+            has_valid_qtys = has_valid_qtys && isNonNegInt(qty);
+        }    
+    //if qtys are good, create an invoice 
+    const stringified = queryString.stringify(POST);
+    if (has_valid_qtys && has_qtys) {
+        //redirect to login
+        response.redirect("./login.html?"+stringified);
+    }else {
+        //if not ready, go back to order page 
+        response.redirect("./order_display.html?" + stringified);
+    }
+    }
+});
 
-            //redirect to product display page if quantity is invalid
-            console.log("redirecting to product display page", has_errors, total_qty);
-            response.redirect("/order_display.html?" + qstr);
+//Create a way to process a user login 
+//Process login from POST
+app.post("/process_login", function (request, response) {
+    var login_error = []; //define login error
+    console.log(request.query); //see what the request outputs 
+    var the_username = request.body.username.toLowerCase(); //request to make it lowercase
 
-        } else { //the quantity data is valid for invoice
-            console.log("redirecting to login page");
-            response.redirect("/login.html?" + qstr);
+//From the JSON file, check if username is there
+if (typeof users_reg_data[the_username] != 'undefined') { //return undefined if username does not match 
+
+    //Check if the username exists in json data
+    if (users_reg_data[the_username].password == request.body.password) { //passwords should match 
+        request.query.username = the_username;
+//Double check in the console if it worked 
+        console.log(users_reg_data[request.query.username].name);
+        request.query.name = users_reg_data[request.query.username].name
+//Redirect to Invoice if log in was successful 
+        response.redirect('./invoice.html?') + querystring.stringify(request.query);
+        return;
+//Redirect if log in was no successful 
+        } else {
+            console.log(login_error);
+            request.query.username = the_username;
+            request.query.name = users_reg_data[the_username].name;
+            request.query.login_error = login_error.join(';');
         }
+//Specifically, tell user that the username was invalid 
+        } else {
+            login_error.push = ('Username is Invalid'); //reply with this message
+            request.query.login_error = login_error.join(';');
+    }
+    //redirect user to the login page to try again 
+    response.redirect('./login.html?') + queryString.stringify(request.query);
+});
+
+//Process Registration Page
+app.post("/process_registration", function (request, response) {
+    let POST = request.body; //get data 
+    console.log(request.query);
+    var errors = [];
+
+// Reference to the alphabet code: http://www.tutorialspark.com/javascript/JavaScript_Regular_Expression_Form_Validation.php
+    //Full name format to have alphabet letters only
+    if (/^[A-Za-z]+$/.test(POST['name']) || (POST['name'] != "undefined")) { //No response if name is okay
+        console.log('Name is Valid'); //check in the console 
+    }
+    else { //When name does not have valid input 
+        errors.push('Please use Letters ONLY for Full Name') //push array error
+    }
+    //Username Guidelines (min 4 characters, max 10 characters)
+    if ((/.{3,10}/ .test(POST['username'])) && (/^[a-zA-Z0-9]*$/.test(POST['username']))) {
+        console.log('Username is Valid'); //Check in the console 
+    } else {
+        errors.push('Username must have at least 4 characters, try again'); //push array error
+
+    //Username Guidelines (must be original and unique)
+    var reg_user = POST['username'].toLowerCase(); //form a case insensitive
+    if (typeof users_reg_data[reg_user] != 'undefined') { //if username is already created in reg data
+        errors.push('Username is already taken. Please enter a New Username.') //push error to array
+    } else { 
+        console.log('New Username Here'); //check in the console 
+    }
+
+    //Email Guidelines
+    //Determine email validation 
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(POST['email'])) {
+        console.log('Email is Valid'); //check in the console
+    } else { //Send an Error if email does not meet requirement
+        errors.push('Email is invalid, try again') //push to errors array
+    }
+
+    //Password Guidelines + Information Validation 
+    //Determine if password meets the 6 character requirement
+    if (POST['password'].length < 6) { //if password does not meet the 6 characters requirement
+        errors.push('Password is too Short, try again!') //push error to array
+    } else {
+        console.log('Password was successful!');
+    }
+    //Check if password matches 
+    if (POST['password'] == POST['repeat_pws']) {
+        console.log('Password is valid'); //check if the statement functions
+    } else {
+        errors.push('Password is invalid, try again') //push error to array
+    }
+
+    //Go to the user's account if everything matches and no errors were found 
+    if (errors.length == 0) {
+        console.log('No Errors Found');
+        //Using the POST, the JSON file will register the user infomation
+            //establish variables for my section errors
+            fs.writeFileSync(filename, data, "utf-8");
+            var username = POST["username"];
+            user_data[username] = {};
+            user_data[username].name = POST['newname'];
+            user_data[username].password = POST['password'];
+            user_data[username].email = POST['email'];
+            users_reg_data = JSON.stringify(user_data);
+            //When order is placed, refirect to Invoice page
+            response.redirect('./invoice.html?' + queryString.stringify(request.query));
+    }
+        //When in doubt, tell user that there were errors and to try again 
+        if(errors.length > 0 ) {
+            console.log(errors); //indicate what errors were there
+            response.send('Please review input, errors were found' + errors + " ");
+        }
+    }
+});
+    
+//Log-in Application; creating a checkout process form for invoice 
+app.post("/process_form", function(request, response) {
+    let POST = request.body; //get data from body 
+    //Creating a loop when the input given is undefined 
+    if (typeof POST['checkout'] != 'undefined') {
+            var has_valid_qtys = true; //assumes that quantity is invalid 
+            var has_qtys = false; //assumes that quantity is valid
+            //create a loop to ensure quantities are valid
+            for (var i = 0; i < products.length; i++) {
+                var qty = POST[`quantity${i}`];
+                has_qtys = has_qtys|| qty > 0
+                has_valid_qtys = has_valid_qtys && isNonNegInt(qty);
+            }    
+             //if qtys are good, create an invoice 
+        const stringified = queryString.stringify(POST);
+        if (has_valid_qtys && has_qtys) {
+        //redirect to login
+        response.redirect("./login.html?"+stringified);
+        }else {
+        //if not ready, go back to order page 
+        response.redirect("./order_display.html?" + stringified);
+    }
     }
 });
 
@@ -83,216 +208,6 @@ function isNonNegInt(q, returnErrors = false) {
     if (parseInt(q) != q) errors.push('This is Not an Integer!'); //check if value is a whole, real number
     return returnErrors ? errors : (errors.length == 0);
 }
-
-fs = require('fs'); //Use file system
-
-//If the file exists, open the file. If it does not, it will not open
-if (fs.existsSync(filename)) { //concurrent checking if file already exists
-    stats = fs.statSync(filename) //retrieve stats from filename 
-    data = fs.readFileSync(filename, 'UTF-8');
-    console.log(typeof data); //check what kind of data it is
-    users_reg_data = JSON.parse(data); //exchange data from web server
-}
-//set isNonNegInt for color check 
-function isNonNegInt(q, return_errors = false) {
-    errors = [];
-    if (q == '') q = 0;
-    if (Number(q) != q) errors.push('<font color="red">Please put a number.</font>'); //check if value is a number
-    else if (q < 0) errors.push('<font color="red">Please put a positive value.</font>'); //check if value is a positive number
-    else if (parseInt(q) != q) errors.push('<font color="red">Please put a whole number.</font>'); //check if value is a whole, real number
-    return return_errors ? errors : (errors.length == 0);
-}
-app.post("/check_purchase", function (request, response) {
-//validate quantities//
-haserrors = false;
-
-
-
-
-
-//if quantities are valid, send them to the log in; query string with quantity data
-quantityqs = qs.stringify(request.body); 
-if (!haserrors) {
-    response.redirect("./login.html?" + quantityqs) 
-
-} else { 
-    //back to process_order form (alert box or redirect back to order page) 
-response.redirect("./order_display.html?" + quantityqs) 
-}
-});
-
-app.post("/check_login", function (request, response) {
-    //Process login form POST
-    console.log(request.query, request.body);//get data from the body 
-    the_username = request.body.username; //get data for username
-    console.log(the_username, "username is", typeof (users_reg_data[the_username])); //write in the console, what is showing
-
-    //Validate Login Data
-    theQtyQuerystring = qs.stringify(request.query);
-    if (typeof users_reg_data[the_username] != 'undefined') { //return undefined if username does not match 
-
-        //Check if the username exists in json data
-        if (users_reg_data[the_username].password == request.body.password) { //passwords should match 
-
-            //Developed a querystring for invoice
-            response.redirect('./invoice.html?' + theQtyQuerystring + `&username=${the_username}`);
-            return;
-        } else {
-            response.redirect('./invoice.html?' + theQtyQuerystring); // redirect to login page when login is invalid
-        }
-    }
-    response.send(`${username} registered!`); //when it does work, user will be registered
-    response.redirect('./invoice.html?' + theQtyQuerystring + `&username=${the_username}`); // redirect to login page when login is invalid
-});
-
-app.post("/register_user", function (request, response) { //Use Post Method, data will not display in URL
-    //Create a register form
-    console.log(request.query, request.body);
-    the_username = request.body.username.toLowerCase(); //request to make it lowercase
-    console.log(the_username, "username is", typeof (users_reg_data[the_username]));
-    username = request.body.username;//saves new username to "users_reg_data" filename
-    theQtyQuerystring = qs.stringify(request.query); // state querystring variable
-
-    //establish variables for my section errors
-    var errors = []; //record all errors
-    var nameerrors = []; //record all name errors
-    var usererrors = []; //record username errors
-    var passerrors = []; //record password errors
-    var confirmerrors = []; //record confirm password errors
-    var emailerrors = []; //record email errors
-
-    //Reference to Lab 11: https://dport96.github.io/ITM352/morea/120.functions/experience-functions.html
-    
-    //Name Check 
-    if (request.body.name == "") { //when no name is given
-        nameerrors.push('Full Name is invalid'); //reply with this message and push name error
-        errors.push('Full Name is invalid') //push to array error
-    }
-    //Full name should not exceed 35 characters
-    if ((request.body.name.length > 35)) { //When name length is greater than 35
-        nameerrors.push('Full Name is too Long, try again!') //reply with this message and push name errors
-        errors.push('Full Name is too Long, try again!') //push array error
-    }
-
-    // Reference to the alphabet code: http://www.tutorialspark.com/javascript/JavaScript_Regular_Expression_Form_Validation.php
-
-    //Full name format to have alphabet letters only
-    if (/^[A-Za-z]+$/.test(request.body.name)) { //No response if name is okay
-    }
-    else { //When name does not have valid input 
-        nameerrors.push('Please use Letters ONLY for Full Name') //reply with this message and push name errors
-        errors.push('Please use Letters ONLY for Full Name') //push array error
-    }
-    //Username Guidelines (min 5 characters, max 10 characters)
-    if ((request.body.username.length < 5)) { //push an error if username is less than 5
-        usererrors.push('Username is too Short, try again!') //reply with this message and push username errors array
-        errors.push('Username is too Short, try again!') //push error to array
-    }
-    if ((request.body.username.length > 10)) { //push an error if username is over 10
-        usererrors.push('Username is too Long, try again!') //reply with this message and push username errors array
-        errors.push('Username is too Long, try again!') //push error to array
-    }
-
-    //Determine if username exists (all usernames should be unique)
-    var reg_user = request.body.username.toLowerCase(); //form a case insensitive
-    if (typeof users_reg_data[reg_user] != 'undefined') { //if username is already created in reg data
-        usererrors.push('Username is already taken. Please enter a New Username.') //reply with this message and push username errors array
-        errors.push('Username is already taken. Please enter a New Username.') //push error to array
-    }
-    //Username Information check to have letters and numbers ONLY
-    //Found this online on how to type the code the test to have letters and numbers validation 
-    if (/^[0-9a-zA-Z]+$/.test(request.body.username)) { //No response if name is okay
-    }
-    else { //send error if it does not meet requirements
-        usererrors.push('Please use Letters and Numbers ONLY') //reply with this message and push username errors
-        errors.push('Please use Letters and Numbers ONLY') //push error to array
-    }
-
-    //Password Information Validation 
-    //Determine if password meets the 6 character requirement
-    if ((request.body.password.length < 6)) { //if password does not meet the 6 characters requirement
-        passerrors.push('Password is too Short, try again!') //reply with this message and push password error array
-        errors.push('Password is too Short, try again!') //push error to array
-    }
-    //Determine if password entered matches the repeat password entered 
-    if (request.body.password !== request.body.confirmpsw) { //confirm password entered
-        confirmerrors.push('Password does NOT match! Please re-enter correct password') //reply with this message and push confirm password array
-        errors.push('Password does NOT match! Please re-enter correct password') //push error to array
-    }
-    //Determine email validation 
-    var reg_email = request.body.email.toLowerCase(); //Force a case sensitive email 
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(reg_email)) {
-    }
-    else { //Send an Error if email does not meet requirement
-        emailerrors.push('Email is invalid') //reply with this message
-        errors.push('Email is invalid') //push to errors array
-    }
-    if (nameerrors.length == 0) { //check if no name errors
-        console.log('No ame errors!'); //check if the statement functions
-    }
-    if (nameerrors.length > 0) { //check if there are name errors
-        console.log('error:' + nameerrors) //see in the console log for name errors
-        request.query.nameerrors = nameerrors.join(';'); //put the name errors together
-    }
-
-    if (usererrors.length == 0) { //check if no username errors
-        console.log('No user errors!'); //check if the statement functions
-    }
-    if (usererrors.length > 0) { //check if there are username errors
-        console.log('error:' + usererrors) //see in the console log for username errors
-        request.query.usererrors = usererrors.join(';'); //put the username errors together
-    }
-
-    if (passerrors.length == 0) { //check if there are password errors
-        console.log('No password errors!'); //check if the statement functions
-    }
-    if (passerrors.length > 0) { //check if there are password errors
-        console.log('error:' + passerrors) //see in the console log for password errors
-        request.query.passerrors = passerrors.join(';'); //put the password errors together
-    }
-
-    if (confirmerrors.length == 0) { //check if there are no errors with password confirmation
-        console.log('No confirmation errors!'); //check if the statement functions
-    }
-    if (confirmerrors.length > 0) { //check if there are password confirmation errors
-        console.log('error:' + confirmerrors); //see in the console log for password errors
-        request.query.confirmerrors = confirmerrors.join(';'); //put the password confirmation errors together
-    }
-    if (emailerrors.length == 0) { //check if there are no errors
-        console.log('No email errors!'); //see in the console to confirm that there are no email errors
-    }
-    if (emailerrors.length > 0) { //reply with an error if there is more than one error
-        console.log('error:' + emailerrors); //see in the console for log email errors
-        request.query.emailerrors = emailerrors.join(';'); //put the email errors together
-    }
-
-    //Save everything when data has no errors and take user to invoice 
-    if (errors.length == 0) { //check if there are no errors
-        console.log('none!'); //check if the statement functions
-        request.query.username = reg_user; //insert username in the querystring
-        request.query.name = request.body.name; //insert name into querystring
-        
-    //Record in JSON file
-        fs.writeFileSync(filename, JSON.stringify(users_reg_data));
-        console.log(theQtyQuerystring, "Redirect to invoice");
-        res.redirect('./invoice.html?' + theQtyQuerystring + `&username=${the_username}`);
-        return; //redirect to the invoice
-    }
-    //Assert errors into querystring
-    else { //if there is more than one errors
-        console.log(errors) //check if the statement functions
-        request.query.name = request.body.name; //add the name into querystring
-        request.query.username = request.body.username; //add the username into querystring
-        request.query.password = request.body.password; //add the password into querystring
-        request.query.confirmpsw = request.body.confirmpsw; //add the confirm password into querystring
-        request.query.email = request.body.email; //add the email back into querystring
-
-        request.query.errors = errors.join(';'); //place all errors into querystring
-        console.log(errors);
-        res.redirect('./public/reg.html?' + theQtyQuerystring) //add query from reg page and invoice when the register page reloads
-    }
-}
-);
 
 //Professor Port helped me understand where to format the code so my server will listen on port 8080
 app.use(express.static('./public')); //looks for files in the public directory (make a get request, look into public and see if it has the file)

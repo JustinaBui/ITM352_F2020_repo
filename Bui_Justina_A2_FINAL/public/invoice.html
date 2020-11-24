@@ -2,15 +2,16 @@
 <!--Reference from Invoice 4 WOD to create my Invoice page-->
 
 <script src="./product_data.js" type="text/javascript">//code to use get request for product list</script>
+
 <script>
     //Reference and Copied from Invoice 4 Lecture Video
     let params = (new URL(document.location)).searchParams; //Use the parse to start the file, quantity, and purchase process
     var quantities = []; //puts quantities into array 
     if (params.has('submitPurchase')) { //cretes a loop
-        for (i = 0; i < products.length; i++) {
-            if (params.has(`quantity${i}`)) {
-                a_qty = params.get(`quantity${i}`);
-                quantities[i] = a_qty;
+        for (i = 0; i < products.length; i++) { //for any given food item
+            if (params.has(`quantity${i}`)) { //if there is an input in the quantity textbox
+                a_qty = params.get(`quantity${i}`); //get info and put variable as "a_qty"
+                quantities[i] = a_qty; //set variable qty for any order with the related quantity textbox
             }
             else {
                 document.write('No Form Submitted. Please Complete Purchase!')
@@ -62,10 +63,10 @@
     </style>
 </head>
 <ul>
-    <a class="active" href="./menu_display.html">Home</a>
-    <a href="./order_display.html">Order</a>
+    <a href="./menu_display.html">Home</a>
+    <a class="active" href="./order_display.html">Order</a>
     <a href="./reg.html">Registration</a>
-    <a class="active" href="./login.html">Log In</a>
+    <a href="./login.html">Log In</a>
 </ul>
 
 <body>
