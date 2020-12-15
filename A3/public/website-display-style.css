@@ -1,0 +1,119 @@
+body {
+    background-color: rgb(236, 234, 234);
+    font-family: "Kanit";
+}
+
+
+.header {
+    background-color: rgb(255, 200, 208);
+}
+
+.header img {
+    width: 500px;
+    height: 10%;
+    float: initial;
+    
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: white;
+    font-family: "Kanit";
+  }
+   
+  .navbar  li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family: "Kanit";
+  }
+  
+  .navbar  li a:hover {
+    background-color: rgb(255, 226, 230);
+  }
+
+.index_page_intro_content {
+    background-color: white;
+}
+
+.index_page_intro_content h2 {
+    text-align: center;
+    background-color: white;
+    font-family:"Kanit";
+    font-size: 50px;
+}
+
+.product_display_content h2 {
+    text-align: center;
+    border: 2px solid black;
+    background-color: pink;
+    font-family:"Kanit";
+    font-size: 20px;
+}
+
+.product_display_content p {
+    border: 2px solid black;
+    background-color: white;
+    text-align: center;
+    font-family:"Kanit";
+}
+
+.product_display_content img {
+    width: 400px;
+    height: 400px;
+    padding-left: 15px;
+}
+
+.product_display_content input {
+    font: "Kanit";
+}
+
+
+.product_display_content {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    size: 20px;
+}
+
+.product_display_content form {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    size: 20px;
+    padding: 20px;
+    background-color: white;
+}
+
+.shopping_cart_items_display table {
+    font-family: 'Kanit';
+    border-collapse: collapse;
+    width: 700px;
+
+}
+
+.shopping_cart_items_display td {
+    font-family: 'Kanit';
+    background-color: ivory;
+    font-size: 20px;
+    
+}
+
+.shopping_cart_items_display th {
+    font-family: "Kanit";
+    background-color: pink;
+    height: 20px;
+    padding: 15px;
+}
+
+.shopping_cart_items_display tr {
+    font-family: 'Kanit';
+    align-content: center;
+    padding: 15px;
+    font-size: 25px;
+}
