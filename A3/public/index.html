@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +9,9 @@
     <title>Heart Depot</title>
 </head>
 
-<body>
 
+
+<body>
     <div class="header">
         <!-- Holds the image that makes the header of the website, "Heart Depot"-->
         <img src="./images/headerr.jpg">
@@ -32,23 +32,88 @@
     <br>
 
     <div class="index_page_intro_content">
-        <h2>Welcome to Home Depot!</h2> 
+        <h2>Welcome to Home Depot!</h2>
+        <img scr="./images/quote0.gif">
     </div>
 
-    <!--Reference: https://www.w3schools.com/howto/howto_js_slideshow.asp→
+    <!-- About Container -->
+    <h1><b>About</b></h1>
+    <div class="w3-row">
+      <p>The store was founded in 2020 by up-and-coming coding designers, Justina and Kylee from the Shidler College of Business in Honolulu, HI. 
+          Leading with positivity is a driving force that the founders want to spread. 
+          In the busy lives we undergo, we often forget that we are loved. 
+          The Heart Depot supports mental health initiative programs that aim to help those in need. 
+          The success of the business was made possible by their supporting family, friends, Professor Port, and loyal customers.</p>
+      <p>We are proud of our difference to spread positivity!</p>
+
+<!--Reference: https://www.w3schools.com/howto/howto_js_slideshow.asp-->
+<div class="slideshow-container">
+    <div class="mySlides">
+    <img src="./images/quote1.jpg" class="center" style="width:40%">
+    </div>
 
 <div class="slideshow-container">
-<div class="mySlides">
-<img src="./images/Banhmi.jpg" class="center" style="width:50%">
+    <div class="mySlides">
+    <img src="./images/quote2.jpg" class="center" style="width:40%">
+    </div>
+<div class="slideshow-container">
+     <div class="mySlides">
+    <img src="./images/quote3.png" class="center" style="width:40%">
+    </div>
+<div class="slideshow-container">
+    <div class="mySlides">
+    <img src="./images/quote4.jpg" class="center" style="width:40%">
+    </div>
+<div class="slideshow-container">
+    <div class="mySlides">
+    <img src="./images/quote5.jpg" class="center" style="width:40%">
+    </div>
 
+<div style="text-align:center">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
 </div>
+<script>
+    var slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) { slideIndex = 1 }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        setTimeout(showSlides, 3000); // Change image every 3 seconds
+    }
+</script>
+
+      <h1><b>Opening Hours</b></h1>
+      <div class="w3-row">
+        <div class="w3-col s6">
+          <p>Monday-Thursday 10.00 AM - 7.00 PM</p>
+        </div>
+        <div class="w3-col s6">
+          <p>Friday-Sunday 12:00 PM - 5:00 PM</p>
+        </div>
+      </div>
+
+<!-- Contact -->
+    <h1><b>Contact</b></h1>
+    <div class="w3-row">
 
 
-<div style="text-align:center"
-<span class="dot"></span>
-
-</div>
-
+  </div>
 </body>
 
 </html>
