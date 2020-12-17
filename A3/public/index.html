@@ -37,9 +37,11 @@ body, html {
     <!-- Right-sided navbar links -->
     <div class="w3-right w3-hide-small">
       <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
-      <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> WORK</a>
-      <a href="#pricing" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> PRICING</a>
-      <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+      <a href="./clothing_display_page.html" class="w3-bar-item w3-button"><i class="fa fa-th"></i> Clothing</a>
+      <a href="./jewelry_display.html" class="w3-bar-item w3-button"><i class="fa fa-th"></i>Jewelry</a>
+      <a href="./homedecor_display.html" class="w3-bar-item w3-button"><i class="fa fa-th"></i>Home Decor</a>
+      <a href="./cart.html" class="w3-bar-item w3-button"><i class="fa fa-usd"></i>Shopping Cart</a>
+      <a href="./login.html" class="w3-bar-item w3-button"></i>LOGIN</a>
     </div>
     <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
@@ -59,7 +61,7 @@ body, html {
   <div class="w3-display-left w3-text-white" style="padding:48px">
     <span class="w3-jumbo w3-hide-small">Heart Depot</span><br>
     <span class="w3-large">Love and kindess is never wasted!</span>
-    <p><a href="#about" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Start Shopping Now</a></p>
+    <p><a href="#about" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Learn More</a></p>
   </div> 
   <div class="w3-display-bottomleft w3-text-grey w3-large" style="padding:24px 48px">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
@@ -74,7 +76,7 @@ body, html {
 <!-- About Section -->
 <div class="w3-container" style="padding:128px 16px" id="about">
   <h3 class="w3-center">ABOUT THE COMPANY</h3>
-  <p class="w3-center w3-large">Key features of our company</p>
+  <p class="w3-center w3-large">Key Features</p>
   <div class="w3-row-padding w3-center" style="margin-top:64px">
     <div class="w3-quarter">
       <i class="fa fa-desktop w3-margin-bottom w3-jumbo w3-center"></i>
@@ -104,12 +106,97 @@ body, html {
   <div class="w3-row-padding">
     <div class="w3-col m6">
       <h3>Meet the Founders</h3>
-      <p>The store was founded in 2020 by up-and-coming coding designers, Justina and Kylee from the Shidler College of Business in Honolulu, HI. Leading with positivity is a driving force that the founders want to spread. In the busy lives we undergo, we often forget that we are loved. The Heart Depot supports mental health initiative programs that aim to help those in need. 
-        <br><br>The success of the business was made possible by their supporting family, friends, Professor Port, and loyal customers.</p>
+      <p>The store was founded in 2020 by up-and-coming coding designers, Justina and Kylee from the Shidler College of Business in Honolulu, HI. 
+        Leading with positivity is a driving force that the founders want to spread. In the busy lives we undergo, we often forget that we are loved. 
+        The Heart Depot supports mental health initiative programs that aim to help those in need. 
+        <br>
+        <br>The success of the business was made possible by their supporting family, friends, Professor Port, and loyal customers.</p>
     </div>
     <div class="w3-col m6">
       <img class="w3-image w3-round-large" src="./images/style1.jpg" alt="Buildings" width="700" height="394">
     </div>
+  </div>
+</div>
+<br>
+
+<!--Reference: https://www.w3schools.com/howto/howto_js_slideshow.asp-->
+    <style>
+      .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+      </style>
+        <div class="slideshow-container">
+  
+            <div class="mySlides">
+                <img src="./images/quote1.jpg" style="width:50%" class="center">
+            </div>
+            
+            <div class="mySlides">
+              <img src="./images/quote2.jpg" style="width:50%" class="center">
+          </div>
+          
+          <div class="mySlides">
+            <img src="./images/quote3.png" style="width:50%" class="center">
+        </div>
+        
+        <div class="mySlides">
+          <img src="./images/quote4.jpg" style="width:50%" class="center">
+      </div>
+      
+      <div class="mySlides">
+        <img src="./images/quote5.jpg" style="width:50%" class="center">
+    </div>
+  
+    <div style="text-align:center">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+  </div>
+  
+  <script>
+    var slideIndex = 0;
+    showSlides();
+  
+    function showSlides() {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) { slideIndex = 1 }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        setTimeout(showSlides, 3000); // Change image every 3 seconds
+    }
+  </script>
+<br>
+  <!-- Promo Section "Statistics" -->
+<div class="w3-container w3-row w3-center w3-dark-grey w3-padding-64">
+  <div class="w3-quarter">
+    <span class="w3-xxlarge"></span>
+    <br>
+  </div>
+  <div class="w3-quarter">
+    <span class="w3-xxlarge"></span>
+    <br>
+  </div>
+  <div class="w3-quarter">
+    <span class="w3-xxlarge"></span>
+    <br>
+  </div>
+  <div class="w3-quarter">
+    <span class="w3-xxlarge"></span>
+    <br>
   </div>
 </div>
 
