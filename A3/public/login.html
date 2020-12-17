@@ -9,6 +9,7 @@
         body,h1,h2,h3,h4,h5,h6 {
             font-family: "Raleway", sans-serif;
             text-align: center;
+            background-image: url("images/background.png");
         }body, html {
           height: 100%;
           line-height: 1.8;
@@ -35,7 +36,6 @@
             <a href="./cart.html" style="float: right;" class="w3-bar-item w3-button"><i class="fa fa-usd"></i>Shopping
                 Cart</a>
         </div>
-        <br>
         <div style="background-image: url('./images/back.jpg');
         background-size: cover; height:150px; padding-top:100px;">
         </div>
@@ -43,22 +43,21 @@
         <form name="login_form" action="process_login" method="POST">
             <h1>Welcome to Heart Depot!</h1>
             <!-- To pass to server -->
-            <label>Username</label>
+            <label>Username</label><br>
                 <input type="text" name="username" size="40" placeholder="enter username"
                     id="username"><br />
                 <br>
-            <label>Password</label>
+            <label>Password</label><br>
                 <input type="password" name="password" size="40" placeholder="enter password"><br />
                 <br>
                 <input type="submit" value="Submit" id="submit_login">
                 <br>
                 <br>
-        </form>
-        <img src="./images/div2.png" class="w3-image" style="width:100%">
-        <br> 
-        <h2>No account?</h2>
-        <p>Register <a href="./registration.html">here</a></p> 
-    
+        </form> 
+        <br>
+        <h1>No account?</h1>
+        <h3>Register <a href="./registration.html">here</a></h3> 
+        <br>
         <div style="background-image: url('./images/back.jpg');
         background-size: cover; height:150px; padding-top:100px;">
         </div>
