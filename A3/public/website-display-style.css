@@ -47,31 +47,3 @@ body {
     font-family:"Ralway";
     font-size: 50px;
 }
-
-.shopping_cart_items_display table {
-    font-family: 'Ralway';
-    border-collapse: collapse;
-    width: 700px;
-
-}
-
-.shopping_cart_items_display td {
-    font-family: 'Ralway';
-    background-color: ivory;
-    font-size: 20px;
-    
-}
-
-.shopping_cart_items_display th {
-    font-family: "Ralway";
-    background-color: pink;
-    height: 20px;
-    padding: 15px;
-}
-
-.shopping_cart_items_display tr {
-    font-family: 'Ralway';
-    align-content: center;
-    padding: 15px;
-    font-size: 25px;
-}
